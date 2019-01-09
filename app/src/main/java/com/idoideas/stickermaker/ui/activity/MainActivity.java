@@ -198,6 +198,8 @@ public class MainActivity extends BaseActivity implements NavigationView.OnNavig
         switch (id) {
             case R.id.setting:
                 Toast.makeText(getApplicationContext(), "Setting", Toast.LENGTH_SHORT).show();
+                Intent i = new Intent(MainActivity.this,SettingActivity.class);
+                startActivity(i);
                 break;
             case R.id.recommend:
                 Toast.makeText(getApplicationContext(), "Recommended to friends", Toast.LENGTH_SHORT).show();

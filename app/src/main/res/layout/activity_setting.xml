@@ -1,0 +1,248 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:orientation="vertical">
+
+    <android.support.v7.widget.CardView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        app:cardElevation="4dp">
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="?actionBarSize">
+            <ImageView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:src="@drawable/ic_back"
+                android:tint="@android:color/black"
+                android:padding="7dp"
+                android:layout_gravity="center_vertical"
+                android:id="@+id/backBtn"/>
+        </LinearLayout>
+    </android.support.v7.widget.CardView>
+
+    <ScrollView
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:orientation="vertical"
+            android:layout_marginTop="3sp">
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="50sp"
+                android:text="About Us"
+                android:textSize="16sp"
+                android:textColor="@android:color/black"
+                android:gravity="center_vertical"
+                android:id="@+id/aboutUsBtn"
+                android:layout_marginLeft="10sp"
+                android:layout_marginRight="10sp"/>
+            <View
+                android:layout_width="match_parent"
+                android:layout_height=".8sp"
+                android:background="@android:color/darker_gray"/>
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="50sp"
+                android:text="Privacy Policy"
+                android:textSize="16sp"
+                android:textColor="@android:color/black"
+                android:gravity="center_vertical"
+                android:id="@+id/policyBtn"
+                android:layout_marginLeft="10sp"
+                android:layout_marginRight="10sp"/>
+            <View
+                android:layout_width="match_parent"
+                android:layout_height=".8sp"
+                android:background="@android:color/darker_gray"/>
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="50sp"
+                android:text="More Application"
+                android:textSize="16sp"
+                android:layout_marginLeft="10sp"
+                android:layout_marginRight="10sp"
+                android:textColor="@android:color/black"
+                android:gravity="center_vertical"
+                android:id="@+id/moreApplicationBtn"/>
+            <View
+                android:layout_width="match_parent"
+                android:layout_height=".8sp"
+                android:background="@android:color/darker_gray"/>
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="vertical">
+                <TextView
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:text="Rate on Google Play "
+                    android:textSize="16sp"
+                    android:textColor="@android:color/black"
+                    android:gravity="center_vertical"
+                    android:id="@+id/ratingBtn"
+                    android:layout_marginLeft="10sp"
+                    android:layout_marginRight="10sp"
+                    android:layout_marginTop="5sp"/>
+                <TextView
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:text="Do you have a few seconds to rate this app? We want to hear your opinion"
+                    android:textSize="12sp"
+                    android:textColor="@android:color/black"
+                    android:gravity="center_vertical"
+                    android:layout_marginLeft="10sp"
+                    android:layout_marginRight="10sp"
+                    android:layout_marginBottom="5sp"/>
+            </LinearLayout>
+
+            <View
+                android:layout_width="match_parent"
+                android:layout_height=".8sp"
+                android:background="@android:color/darker_gray"/>
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="vertical"
+                android:layout_marginTop="3sp"
+                android:layout_marginBottom="3sp">
+                <TextView
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:text="Recommend to friend"
+                    android:textSize="16sp"
+                    android:layout_marginLeft="10sp"
+                    android:layout_marginRight="10sp"
+                    android:layout_marginTop="5dp"
+                    android:textColor="@android:color/black"
+                    android:gravity="center_vertical"
+                    android:id="@+id/friendsBtn"/>
+                <TextView
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:text="Can you please help us to spread in the world about this application"
+                    android:textSize="12sp"
+                    android:textColor="@android:color/black"
+                    android:gravity="center_vertical"
+                    android:layout_marginLeft="10sp"
+                    android:layout_marginRight="10sp"
+                    android:layout_marginBottom="5sp"/>
+            </LinearLayout>
+
+
+            <View
+                android:layout_width="match_parent"
+                android:layout_height=".8sp"
+                android:background="@android:color/darker_gray"/>
+
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="vertical"
+                android:layout_marginTop="3sp"
+                android:layout_marginBottom="3sp">
+                <TextView
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:text="Feedback"
+                    android:textSize="16sp"
+                    android:textColor="@android:color/black"
+                    android:gravity="center_vertical"
+                    android:id="@+id/feedbackBtn"
+                    android:layout_marginLeft="10sp"
+                    android:layout_marginRight="10sp"
+                    android:layout_marginTop="5sp"/>
+                <TextView
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:text="Please give us feedback and any suggetion about this application"
+                    android:textSize="12sp"
+                    android:textColor="@android:color/black"
+                    android:gravity="center_vertical"
+                    android:layout_marginLeft="10sp"
+                    android:layout_marginRight="10sp"
+                    android:layout_marginBottom="5sp"/>
+            </LinearLayout>
+
+            <View
+                android:layout_width="match_parent"
+                android:layout_height=".8sp"
+                android:background="@android:color/darker_gray"/>
+
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="vertical"
+                android:layout_marginTop="3sp"
+                android:layout_marginBottom="3sp">
+                <TextView
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:text="Version"
+                    android:textSize="16sp"
+                    android:layout_marginLeft="10sp"
+                    android:layout_marginRight="10sp"
+                    android:textColor="@android:color/black"
+                    android:gravity="center_vertical"
+                    android:layout_marginTop="5sp"
+                    android:id="@+id/versionBtn"/>
+                <TextView
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:text="1.0"
+                    android:textSize="12sp"
+                    android:textColor="@android:color/black"
+                    android:gravity="center_vertical"
+                    android:layout_marginLeft="10sp"
+                    android:layout_marginRight="10sp"
+                    android:layout_marginBottom="5sp"/>
+            </LinearLayout>
+            <View
+                android:layout_width="match_parent"
+                android:layout_height=".8sp"
+                android:background="@android:color/darker_gray"/>
+
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="vertical"
+                android:layout_marginTop="3sp"
+                android:layout_marginBottom="3sp">
+                <TextView
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:text="Update"
+                    android:layout_marginTop="5sp"
+                    android:id="@+id/updateBtn"
+                    android:textSize="16sp"
+                    android:layout_marginLeft="10sp"
+                    android:layout_marginRight="10sp"
+                    android:textColor="@android:color/black"
+                    android:gravity="center_vertical"/>
+                <TextView
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:text="Check for new update"
+                    android:textSize="12sp"
+                    android:textColor="@android:color/black"
+                    android:gravity="center_vertical"
+                    android:layout_marginLeft="10sp"
+                    android:layout_marginRight="10sp"
+                    android:layout_marginBottom="5sp"/>
+            </LinearLayout>
+
+            <View
+                android:layout_width="match_parent"
+                android:layout_height="1sp"
+                android:background="@android:color/darker_gray"/>
+        </LinearLayout>
+    </ScrollView>
+</LinearLayout>

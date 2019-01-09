@@ -65,6 +65,9 @@
         <activity
             android:name=".ui.activity.ContentActivity"
             android:theme="@style/AppTheme.NoActionBar" />
+        <activity
+            android:name=".ui.activity.SettingActivity"
+            android:theme="@style/AppTheme.NoActionBar" />
 
         <activity
             android:name=".ui.activity.MainActivity"
