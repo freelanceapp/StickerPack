@@ -1,0 +1,26 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <color name="colorPrimary">#fff</color>
+    <color name="colorPrimaryDark">#BABABA</color>
+    <color name="colorAccent">#128C7E</color>
+    <color name="inactiveAddButtonColor">#B3B3B3</color>
+    <color name="infoPageBackgroundColor">#EBEBEB</color>
+    <color name="actionBarArrowColor">@color/colorAccent</color>
+    <color name="lightBlue">#4286f4</color>
+    <color name="darkBlue">#3065ba</color>
+    <color name="lightRed">#f44141</color>
+    <color name="darkRed">#cc3939</color>
+
+    <color name="text_color_a">#1b1b1b</color>
+    <color name="text_color_b">#2e2e2e</color>
+    <color name="text_color_c">#484848</color>
+    <color name="text_color_d">#646464</color>
+    <color name="text_color_e">#808080</color>
+    <color name="text_color_f">#949494</color>
+
+    <color name="gray_a">#7e7e7e</color>
+    <color name="gray_b">#999999</color>
+    <color name="gray_c">#ababab</color>
+    <color name="gray_d">#c1c1c1</color>
+    <color name="gray_e">#d6d6d6</color>
+</resources>

@@ -1,0 +1,36 @@
+<?xml version="1.0" encoding="utf-8"?>
+<menu xmlns:android="http://schemas.android.com/apk/res/android">
+    <item
+        android:id="@+id/setting"
+        android:icon="@drawable/ic_settings"
+        android:title="Setting" />
+    <item
+        android:id="@+id/recommend"
+        android:icon="@drawable/ic_share"
+        android:title="Recommended to friends" />
+    <item
+        android:id="@+id/rate_us"
+        android:icon="@drawable/ic_star"
+        android:title="Rate us" />
+    <item
+        android:id="@+id/more_apps"
+        android:icon="@drawable/ic_apps"
+        android:title="More App" />
+    <item
+        android:id="@+id/license"
+        android:icon="@drawable/ic_assignment"
+        android:title="License" />
+    <item
+        android:id="@+id/notice"
+        android:icon="@drawable/ic_copyright"
+        android:title="DMCA Notice" />
+    <item
+        android:id="@+id/privacy"
+        android:icon="@drawable/ic_lock"
+        android:title="Privacy Policy" />
+    <item
+        android:id="@+id/about"
+        android:icon="@drawable/ic_info"
+        android:title="About us" />
+
+</menu>

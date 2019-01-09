@@ -1,0 +1,100 @@
+<?xml version="1.0" encoding="utf-8"?>
+<manifest xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    package="com.idoideas.stickermaker">
+
+    <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE" />
+    <uses-permission android:name="android.permission.CHANGE_WIFI_STATE" />
+    <uses-permission android:name="android.permission.CHANGE_NETWORK_STATE" />
+    <uses-permission android:name="android.permission.ACCESS_WIFI_STATE" />
+    <uses-permission android:name="android.permission.INTERNET" />
+    <uses-permission android:name="android.permission.WRITE_INTERNAL_STORAGE" />
+    <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE" />
+    <uses-permission android:name="com.android.vending.BILLING" />
+
+    <application
+        android:name=".app.Application"
+        android:allowBackup="true"
+        android:icon="@drawable/stickermakerlogo"
+        android:label="@string/app_name"
+        android:roundIcon="@drawable/stickermakerlogo"
+        android:supportsRtl="true"
+        android:theme="@style/AppTheme.NoActionBar"
+        tools:ignore="GoogleAppIndexingWarning"
+        tools:node="replace">
+        <activity
+            android:name=".WhatsAppBasedCode.StickerPackListActivity"
+            android:configChanges="keyboardHidden|orientation"
+            android:label="@string/title_activity_sticker_packs_list"
+            android:theme="@style/AppTheme.NoActionBar">
+            <!-- <intent-filter>
+                 <action android:name="android.intent.action.MAIN" />
+
+                 <category android:name="android.intent.category.LAUNCHER" />
+             </intent-filter>-->
+            <intent-filter>
+                <action android:name="android.intent.action.SEND" />
+
+                <data android:mimeType="*/*" />
+
+                <category android:name="android.intent.category.DEFAULT" />
+            </intent-filter>
+        </activity>
+
+        <activity
+            android:name=".WhatsAppBasedCode.StickerPackDetailsActivity"
+            android:parentActivityName=".WhatsAppBasedCode.StickerPackListActivity"
+            tools:ignore="UnusedAttribute">
+            <meta-data
+                android:name="android.support.PARENT_ACTIVITY"
+                android:value="com.idoideas.stickermaker.WhatsAppBasedCode.StickerPackListActivity" />
+        </activity>
+        <activity
+            android:name=".WhatsAppBasedCode.StickerPackInfoActivity"
+            android:label="@string/title_activity_sticker_pack_info"
+            android:parentActivityName=".WhatsAppBasedCode.StickerPackDetailsActivity">
+            <meta-data
+                android:name="android.support.PARENT_ACTIVITY"
+                android:value="com.idoideas.stickermaker.WhatsAppBasedCode.StickerPackDetailsActivity" />
+        </activity>
+        <activity
+            android:name=".NewUserIntroActivity"
+            android:theme="@style/Theme.Intro" />
+        <activity android:name=".ui.activity.AddStickerActivity" />
+
+        <activity
+            android:name=".ui.activity.ContentActivity"
+            android:theme="@style/AppTheme.NoActionBar" />
+
+        <activity
+            android:name=".ui.activity.MainActivity"
+            android:theme="@style/AppTheme.NoActionBar">
+            <intent-filter>
+                <action android:name="android.intent.action.MAIN" />
+
+                <category android:name="android.intent.category.LAUNCHER" />
+            </intent-filter>
+        </activity>
+        <activity android:name=".ui.activity.SubCategoryActivity" />
+        <activity android:name=".ui.activity.StickerDetailsActivity">
+            <meta-data
+                android:name="android.support.PARENT_ACTIVITY"
+                android:value=".ui.activity.MainActivity" />
+        </activity>
+
+        <!--<provider
+            android:name=".provider.StickerContentProvider"
+            android:authorities="${contentProviderAuthority}"
+            android:enabled="true"
+            android:exported="true"
+            android:readPermission="com.whatsapp.sticker.READ" />-->
+
+        <provider
+            android:name=".WhatsAppBasedCode.CustomStickerContentProvider"
+            android:authorities="${contentProviderAuthority}"
+            android:enabled="true"
+            android:exported="true"
+            android:readPermission="com.whatsapp.sticker.READ" />
+    </application>
+
+</manifest>
