@@ -82,13 +82,14 @@
                 android:value=".ui.activity.MainActivity" />
         </activity>
 
-        <!--<provider
+<!--
+        <provider
             android:name=".provider.StickerContentProvider"
             android:authorities="${contentProviderAuthority}"
             android:enabled="true"
             android:exported="true"
-            android:readPermission="com.whatsapp.sticker.READ" />-->
-
+            android:readPermission="com.whatsapp.sticker.READ" />
+-->
         <provider
             android:name=".WhatsAppBasedCode.CustomStickerContentProvider"
             android:authorities="${contentProviderAuthority}"

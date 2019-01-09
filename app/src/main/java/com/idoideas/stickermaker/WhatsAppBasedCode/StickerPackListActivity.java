@@ -95,6 +95,18 @@ public class StickerPackListActivity extends BaseActivity {
     }
 
     @Override
+    protected void onStart() {
+        super.onStart();
+        if (getIntent().getStringExtra("pack_name") != null) {
+            String strName = getIntent().getStringExtra("pack_name");
+            String strId = getIntent().getStringExtra("pack_id");
+            String strUri = getIntent().getStringExtra("pack_uri");
+            Uri uri = Uri.parse(strUri);
+            createNewStickerPackAndOpenIt(strName, strId, uri);
+        }
+    }
+
+    @Override
     protected void onResume() {
         super.onResume();
         String action = getIntent().getAction();
@@ -125,9 +137,8 @@ public class StickerPackListActivity extends BaseActivity {
         super.onDestroy();
     }
 
-
     public void showStickerPackList(List<StickerPackModal> stickerPackList) {
-        allStickerPacksListAdapter = new StickerPackListAdapter(context,stickerPackList, onAddButtonClickedListener);
+        allStickerPacksListAdapter = new StickerPackListAdapter(context, stickerPackList, onAddButtonClickedListener);
         packRecyclerView.setAdapter(allStickerPacksListAdapter);
         packLayoutManager = new LinearLayoutManager(this);
         packLayoutManager.setOrientation(LinearLayoutManager.VERTICAL);
@@ -194,7 +205,7 @@ public class StickerPackListActivity extends BaseActivity {
             }
         } else if (data != null && requestCode == 2319) {
             Uri uri = data.getData();
-            createNewStickerPackAndOpenIt(newName, uri);
+            createNewStickerPackAndOpenIt(newName, "", uri);
         }
     }
 
@@ -378,9 +389,15 @@ public class StickerPackListActivity extends BaseActivity {
         alert.show();
     }
 
-    private void createNewStickerPackAndOpenIt(String name, Uri trayImage) {
+    private void createNewStickerPackAndOpenIt(String name, String strId, Uri trayImage) {
         String newId = UUID.randomUUID().toString();
-        StickerPackModal sp = new StickerPackModal(newId, name, getApplicationContext().getString(R.string.app_name),
+        String packId = "";
+        if (strId.isEmpty()) {
+            packId = newId;
+        } else {
+            packId = strId;
+        }
+        StickerPackModal sp = new StickerPackModal(packId, name, getApplicationContext().getString(R.string.app_name),
                 trayImage, "", "", "", "", this);
         StickerBook.addStickerPackExisting(sp);
 
@@ -388,7 +405,7 @@ public class StickerPackListActivity extends BaseActivity {
         intent.putExtra(StickerPackDetailsActivity.EXTRA_SHOW_UP_BUTTON, true);
         intent.putExtra(StickerPackDetailsActivity.EXTRA_STICKER_PACK_DATA, newId);
         intent.putExtra("isNewlyCreated", true);
-        this.startActivity(intent);
+        startActivity(intent);
     }
 
     private void openFileTray(String name, String creator) {
@@ -398,19 +415,4 @@ public class StickerPackListActivity extends BaseActivity {
         newCreator = creator;
         startActivityForResult(i, 2319);
     }
-
-  /*  private void makeIntroNotRunAgain() {
-        SharedPreferences prefs = PreferenceManager.getDefaultSharedPreferences(getBaseContext());
-        boolean previouslyStarted = prefs.getBoolean("isAlreadyShown", false);
-        if (!previouslyStarted) {
-            SharedPreferences.Editor edit = prefs.edit();
-            edit.putBoolean("isAlreadyShown", false);
-            edit.commit();
-        }
-    }
-
-    private boolean toShowIntro() {
-        SharedPreferences prefs = PreferenceManager.getDefaultSharedPreferences(getBaseContext());
-        return prefs.getBoolean("isAlreadyShown", true);
-    }*/
 }

@@ -223,12 +223,10 @@ public class StickerPackDetailsActivity extends BaseActivity {
                     for (int i = 0; i < clipData.getItemCount(); i++) {
                         ClipData.Item path = clipData.getItemAt(i);
                         Uri uri = path.getUri();
-                        //getContentResolver().takePersistableUriPermission(Objects.requireNonNull(uri), Intent.FLAG_GRANT_READ_URI_PERMISSION);
                         stickerPack.addSticker(uri, this);
                     }
                 } else {
                     Uri uri = data.getData();
-                    // getContentResolver().takePersistableUriPermission(Objects.requireNonNull(uri), Intent.FLAG_GRANT_READ_URI_PERMISSION);
                     stickerPack.addSticker(uri, this);
                 }
                 finish();
