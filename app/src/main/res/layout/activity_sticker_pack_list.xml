@@ -47,56 +47,11 @@
             android:layout_height="4dp"
             android:background="@drawable/toolbar_dropshadow" />
 
-        <LinearLayout
+        <android.support.v7.widget.RecyclerView
+            android:id="@+id/sticker_pack_list"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
-            android:orientation="vertical"
-            android:weightSum="2">
-
-            <LinearLayout
-                android:layout_width="match_parent"
-                android:layout_height="match_parent"
-                android:layout_weight="1"
-                android:orientation="vertical">
-
-                <TextView
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_marginLeft="16dp"
-                    android:padding="4dp"
-                    android:text="Custom sticker pack"
-                    android:textColor="@color/darkBlue" />
-
-                <android.support.v7.widget.RecyclerView
-                    android:id="@+id/sticker_pack_list"
-                    android:layout_width="match_parent"
-                    android:layout_height="match_parent"
-                    android:layout_marginTop="8dp" />
-            </LinearLayout>
-
-            <LinearLayout
-                android:visibility="gone"
-                android:layout_width="match_parent"
-                android:layout_height="match_parent"
-                android:layout_marginTop="8dp"
-                android:layout_weight="1"
-                android:orientation="vertical">
-
-                <TextView
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_marginLeft="16dp"
-                    android:padding="4dp"
-                    android:text="Downloaded sticker pack"
-                    android:textColor="@color/darkBlue" />
-
-                <android.support.v7.widget.RecyclerView
-                    android:id="@+id/recyclerViewDownloadStickerPack"
-                    android:layout_width="match_parent"
-                    android:layout_height="match_parent"
-                    android:layout_marginTop="8dp" />
-            </LinearLayout>
-        </LinearLayout>
+            android:layout_marginTop="8dp" />
     </LinearLayout>
 
     <LinearLayout

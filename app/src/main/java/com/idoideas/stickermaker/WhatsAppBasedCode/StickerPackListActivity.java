@@ -2,6 +2,7 @@ package com.idoideas.stickermaker.WhatsAppBasedCode;
 
 import android.app.Activity;
 import android.app.AlertDialog;
+import android.app.Dialog;
 import android.content.ActivityNotFoundException;
 import android.content.Context;
 import android.content.DialogInterface;
@@ -11,6 +12,8 @@ import android.net.Uri;
 import android.os.AsyncTask;
 import android.os.Build;
 import android.os.Bundle;
+import android.os.Handler;
+import android.os.Parcelable;
 import android.support.annotation.NonNull;
 import android.support.v7.widget.DividerItemDecoration;
 import android.support.v7.widget.LinearLayoutManager;
@@ -36,7 +39,9 @@ import com.idoideas.stickermaker.BuildConfig;
 import com.idoideas.stickermaker.DataArchiver;
 import com.idoideas.stickermaker.R;
 import com.idoideas.stickermaker.StickerBook;
+import com.idoideas.stickermaker.modals.category.StickerList;
 import com.idoideas.stickermaker.ui.activity.AddStickerActivity;
+import com.idoideas.stickermaker.utils.AppProgressDialog;
 
 import java.lang.ref.WeakReference;
 import java.util.ArrayList;
@@ -56,6 +61,8 @@ public class StickerPackListActivity extends BaseActivity {
     ArrayList<StickerPackModal> stickerPackList;
     public static Context context;
     public static String newName, newCreator;
+    public List<StickerList> stickerLists = new ArrayList<>();
+    public static Dialog dialog;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -98,11 +105,14 @@ public class StickerPackListActivity extends BaseActivity {
     protected void onStart() {
         super.onStart();
         if (getIntent().getStringExtra("pack_name") != null) {
+            dialog = new Dialog(context);
+            AppProgressDialog.show(dialog);
             String strName = getIntent().getStringExtra("pack_name");
             String strId = getIntent().getStringExtra("pack_id");
             String strUri = getIntent().getStringExtra("pack_uri");
+            stickerLists = getIntent().getParcelableArrayListExtra("sticker_list");
             Uri uri = Uri.parse(strUri);
-            createNewStickerPackAndOpenIt(strName, strId, uri);
+            createNewStickerPackAndOpenIt(strName, uri, "download");
         }
     }
 
@@ -205,7 +215,7 @@ public class StickerPackListActivity extends BaseActivity {
             }
         } else if (data != null && requestCode == 2319) {
             Uri uri = data.getData();
-            createNewStickerPackAndOpenIt(newName, "", uri);
+            createNewStickerPackAndOpenIt(newName, uri, "");
         }
     }
 
@@ -389,15 +399,9 @@ public class StickerPackListActivity extends BaseActivity {
         alert.show();
     }
 
-    private void createNewStickerPackAndOpenIt(String name, String strId, Uri trayImage) {
+    private void createNewStickerPackAndOpenIt(String name, Uri trayImage, String strFrom) {
         String newId = UUID.randomUUID().toString();
-        String packId = "";
-        if (strId.isEmpty()) {
-            packId = newId;
-        } else {
-            packId = strId;
-        }
-        StickerPackModal sp = new StickerPackModal(packId, name, getApplicationContext().getString(R.string.app_name),
+        StickerPackModal sp = new StickerPackModal(newId, name, getApplicationContext().getString(R.string.app_name),
                 trayImage, "", "", "", "", this);
         StickerBook.addStickerPackExisting(sp);
 
@@ -405,7 +409,18 @@ public class StickerPackListActivity extends BaseActivity {
         intent.putExtra(StickerPackDetailsActivity.EXTRA_SHOW_UP_BUTTON, true);
         intent.putExtra(StickerPackDetailsActivity.EXTRA_STICKER_PACK_DATA, newId);
         intent.putExtra("isNewlyCreated", true);
-        startActivity(intent);
+        intent.putExtra("from", strFrom);
+        intent.putParcelableArrayListExtra("sticker_list", (ArrayList<? extends Parcelable>) stickerLists);
+        new Handler().postDelayed(new Runnable() {
+            @Override
+            public void run() {
+                startActivity(intent);
+                if (!strFrom.isEmpty()) {
+                    finish();
+                }
+                AppProgressDialog.hide(dialog);
+            }
+        }, 500);
     }
 
     private void openFileTray(String name, String creator) {

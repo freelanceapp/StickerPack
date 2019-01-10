@@ -17,12 +17,17 @@ import android.view.View;
 import android.widget.ImageView;
 import android.widget.TextView;
 
+import com.facebook.drawee.backends.pipeline.Fresco;
+import com.facebook.soloader.SoLoader;
 import com.idoideas.stickermaker.R;
+import com.idoideas.stickermaker.StickerBook;
 import com.idoideas.stickermaker.WhatsAppBasedCode.StickerPackListActivity;
+import com.idoideas.stickermaker.WhatsAppBasedCode.StickerPackModal;
 import com.idoideas.stickermaker.adapter.StickerAdapter;
 import com.idoideas.stickermaker.adapter.SubCategoryListAdapter;
 import com.idoideas.stickermaker.constant.Constant;
 import com.idoideas.stickermaker.modals.category.StickerDatum;
+import com.idoideas.stickermaker.modals.category.StickerList;
 import com.idoideas.stickermaker.modals.category.StickerSubcategory;
 import com.idoideas.stickermaker.retrofit_provider.RetrofitService;
 import com.idoideas.stickermaker.ui.fragment.Sticker;
@@ -52,12 +57,14 @@ public class SubCategoryActivity extends BaseActivity implements View.OnClickLis
     private SubCategoryListAdapter subCategoryListAdapter;
     private List<StickerSubcategory> subCatList = new ArrayList<>();
     public static SubCategoryActivity subCategoryActivity;
+    public List<StickerList> stickerLists = new ArrayList<>();
 
     public static String strDownloadPackId = "", strPackName = "";
     public static String strImgUrl = "";
     public static Uri urlURI;
     public static String newId = "";
     public static Dialog dialog;
+    ArrayList<StickerPackModal> stickerPackList;
 
     List<Sticker> mStickers;
     List<StickerPack> stickerPacks = new ArrayList<>();
@@ -82,6 +89,11 @@ public class SubCategoryActivity extends BaseActivity implements View.OnClickLis
     private void init() {
         if (getIntent() == null)
             return;
+
+        StickerBook.init(this);
+        Fresco.initialize(this);
+        SoLoader.init(this, false);
+        stickerPackList = StickerBook.getAllStickerPacks();
 
         stickerDatum = getIntent().getParcelableExtra("sub_category");
         subCatList.addAll(stickerDatum.getSubcategory());
@@ -163,6 +175,7 @@ public class SubCategoryActivity extends BaseActivity implements View.OnClickLis
                             AppProgressDialog.hide(dialog);
                     } else {
                         if (stickerSubcategory.getSticker().size() > 0) {
+                            stickerLists.addAll(stickerSubcategory.getSticker());
                             AppPreference.setStringPreference(mContext, strDownloadPackId, strDownloadPackId);
                             strImgUrl = Constant.IMAGE_URL + stickerSubcategory.getSticker().get(0).getStickers();
                             try {
@@ -207,7 +220,6 @@ public class SubCategoryActivity extends BaseActivity implements View.OnClickLis
     }
 
     private static class MyAsyncTask extends AsyncTask<String, Void, Bitmap> {
-
         protected Bitmap doInBackground(String... params) {
             try {
                 URL url = new URL(params[0]);
@@ -224,17 +236,19 @@ public class SubCategoryActivity extends BaseActivity implements View.OnClickLis
 
         protected void onPostExecute(Bitmap result) {
             urlURI = convertIconTrayToWebP(result, mContext);
-
             subCategoryActivity.sendDataIntent(strPackName, newId, urlURI.toString());
         }
     }
 
     public void sendDataIntent(String strName, String strId, String strUri) {
+        AppProgressDialog.hide(dialog);
         Intent intent = new Intent(mContext, StickerPackListActivity.class);
         intent.putExtra("pack_name", strName);
         intent.putExtra("pack_id", strId);
         intent.putExtra("pack_uri", strUri);
+        intent.putParcelableArrayListExtra("sticker_list", (ArrayList<? extends Parcelable>) stickerLists);
         startActivity(intent);
+        finish();
     }
 
     public static Uri convertIconTrayToWebP(Bitmap bitmap, Context context) {

@@ -30,13 +30,6 @@ public class ImageManipulation {
             Bitmap bitmap = MediaStore.Images.Media.getBitmap(context.getContentResolver(), uri);
             dirChecker(context.getFilesDir() + "/" + StickerBookId);
             String path = context.getFilesDir() + "/" + StickerBookId + "/" + StickerBookId + "-" + StickerId + ".webp";
-
-            /*FileOutputStream out = new FileOutputStream(path);
-            bitmap = Bitmap.createScaledBitmap(bitmap, 512, 512, true);
-            Log.w("IMAGE SIZE before comperssion", ""+FilesUtils.getUriSize(Uri.fromFile(new File(path)), context));
-            bitmap.compress(Bitmap.CompressFormat.WEBP, 100, out); //100-best quality
-            Log.w("IMAGE SIZE first", ""+FilesUtils.getUriSize(Uri.fromFile(new File(path)), context));
-            */
             makeSmallestBitmapCompatible(path, bitmap);
             return Uri.fromFile(new File(path));
         } catch (Exception e) {
@@ -48,12 +41,6 @@ public class ImageManipulation {
     public static void imageUrlToWebP() {
         try {
             new MyAsyncTask().execute(Constant.DEFAULT_IMAGE);
-            //Bitmap image = BitmapFactory.decodeStream(url.openConnection().getInputStream());
-            // Bitmap bitmap = MediaStore.Images.Media.getBitmap(context.getContentResolver(), uri);
-            //String path = context.getFilesDir() + "/" + StickerBookId + "/" + StickerBookId + "-" + StickerId + ".webp";
-
-            /*Bitmap image = newBitmap;
-            makeSmallestBitmapCompatible(strPath, image);*/
         } catch (Exception e) {
             e.printStackTrace();
         }

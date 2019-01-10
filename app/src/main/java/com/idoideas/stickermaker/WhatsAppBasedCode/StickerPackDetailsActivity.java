@@ -10,13 +10,18 @@ package com.idoideas.stickermaker.WhatsAppBasedCode;
 
 import android.app.Activity;
 import android.app.AlertDialog;
+import android.app.Dialog;
 import android.content.ActivityNotFoundException;
 import android.content.ClipData;
+import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
+import android.graphics.Bitmap;
+import android.graphics.BitmapFactory;
 import android.net.Uri;
 import android.os.AsyncTask;
 import android.os.Bundle;
+import android.os.Handler;
 import android.support.annotation.NonNull;
 import android.support.v7.widget.GridLayoutManager;
 import android.support.v7.widget.RecyclerView;
@@ -35,9 +40,22 @@ import com.idoideas.stickermaker.DataArchiver;
 import com.idoideas.stickermaker.R;
 import com.idoideas.stickermaker.StickerBook;
 import com.idoideas.stickermaker.constant.Constant;
+import com.idoideas.stickermaker.modals.category.StickerList;
 import com.idoideas.stickermaker.utils.AppPreference;
+import com.idoideas.stickermaker.utils.AppProgressDialog;
 
+import java.io.ByteArrayOutputStream;
+import java.io.File;
+import java.io.FileNotFoundException;
+import java.io.FileOutputStream;
+import java.io.IOException;
+import java.io.InputStream;
 import java.lang.ref.WeakReference;
+import java.net.HttpURLConnection;
+import java.net.URL;
+import java.util.ArrayList;
+import java.util.List;
+import java.util.UUID;
 
 public class StickerPackDetailsActivity extends BaseActivity {
 
@@ -57,27 +75,39 @@ public class StickerPackDetailsActivity extends BaseActivity {
     public static final String EXTRA_STICKER_PACK_DATA = "sticker_pack";
     private static final String TAG = "StickerPackDetails";
 
+    public static StickerPackDetailsActivity stickerPackDetailsActivity;
     private RecyclerView recyclerView;
     private GridLayoutManager layoutManager;
     private StickerPreviewAdapter stickerPreviewAdapter;
     private int numColumns;
     private View addButton;
     private View alreadyAddedText;
-    private StickerPackModal stickerPack;
+    public StickerPackModal stickerPack;
     private View divider;
     private WhiteListCheckAsyncTask whiteListCheckAsyncTask;
     private LinearLayout shareButton;
     private LinearLayout deleteButton;
+    public static Uri urlURI;
+    public static Context mContext;
+    public List<StickerList> stickerLists = new ArrayList<>();
+    public static Dialog dialog;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.sticker_pack_details);
-
+        stickerPackDetailsActivity = this;
+        mContext = this;
         findViewById(R.id.imgBack).setOnClickListener(v -> finish());
 
+        init();
+        getStickerIntent();
+    }
+
+    private void init() {
         boolean showUpButton = getIntent().getBooleanExtra(EXTRA_SHOW_UP_BUTTON, false);
-        stickerPack = StickerBook.getStickerPackById(getIntent().getStringExtra(EXTRA_STICKER_PACK_DATA));
+        String strPackId = getIntent().getStringExtra(EXTRA_STICKER_PACK_DATA);
+        stickerPack = StickerBook.getStickerPackById(strPackId);
         TextView packNameTextView = findViewById(R.id.pack_name);
         TextView packPublisherTextView = findViewById(R.id.author);
         ImageView packTrayIcon = findViewById(R.id.tray_image);
@@ -86,7 +116,7 @@ public class StickerPackDetailsActivity extends BaseActivity {
         shareButton = findViewById(R.id.share_pack_button);
         deleteButton = findViewById(R.id.delete_pack_button);
         alreadyAddedText = findViewById(R.id.already_added_text);
-        layoutManager = new GridLayoutManager(this, 1);
+        layoutManager = new GridLayoutManager(this, 4);
         recyclerView = findViewById(R.id.sticker_list);
         recyclerView.setLayoutManager(layoutManager);
         recyclerView.getViewTreeObserver().addOnGlobalLayoutListener(pageLayoutListener);
@@ -147,6 +177,91 @@ public class StickerPackDetailsActivity extends BaseActivity {
         }
     }
 
+    private void getStickerIntent() {
+        if (getIntent().getStringExtra("from") != null) {
+            if (getIntent().getStringExtra("from").equals("download")) {
+                dialog = new Dialog(mContext);
+                AppProgressDialog.show(dialog);
+                stickerLists = getIntent().getParcelableArrayListExtra("sticker_list");
+                for (int i = 0; i < stickerLists.size(); i++) {
+                    String strImgUrl = Constant.IMAGE_URL + stickerLists.get(i).getStickers();
+                    new MyAsyncTask().execute(strImgUrl);
+                }
+                new Handler().postDelayed(new Runnable() {
+                    @Override
+                    public void run() {
+                        AppProgressDialog.hide(dialog);
+                        recyclerView.getViewTreeObserver().addOnGlobalLayoutListener(pageLayoutListener);
+                        recyclerView.addOnScrollListener(dividerScrollListener);
+                        stickerPreviewAdapter.notifyDataSetChanged();
+                        init();
+                    }
+                }, 500);
+            }
+        }
+    }
+
+    /************************************************************************************/
+    private static class MyAsyncTask extends AsyncTask<String, Void, Bitmap> {
+        protected Bitmap doInBackground(String... params) {
+            try {
+                URL url = new URL(params[0]);
+                HttpURLConnection connection = (HttpURLConnection) url.openConnection();
+                connection.setDoInput(true);
+                connection.connect();
+                InputStream input = connection.getInputStream();
+                Bitmap myBitmap = BitmapFactory.decodeStream(input);
+                return myBitmap;
+            } catch (IOException e) {
+                return null;
+            }
+        }
+
+        protected void onPostExecute(Bitmap result) {
+            urlURI = convertBitmapToUri(result, mContext);
+            stickerPackDetailsActivity.stickerPack.addSticker(urlURI, mContext);
+        }
+    }
+
+    public static Uri convertBitmapToUri(Bitmap bitmap, Context context) {
+        String newId = UUID.randomUUID().toString();
+        dirChecker(context.getFilesDir() + "/" + newId);
+        String path = context.getFilesDir() + "/" + newId + "/" + newId + ".webp";
+        int quality = 100;
+        FileOutputStream outs = null;
+        try {
+            outs = new FileOutputStream(path);
+        } catch (FileNotFoundException e) {
+            e.printStackTrace();
+        }
+        bitmap = Bitmap.createScaledBitmap(bitmap, 420, 420, true);
+        int byteArrayLength = 100000;
+        ByteArrayOutputStream bos = null;
+
+        while ((byteArrayLength / 1000) >= 100) {
+            bos = new ByteArrayOutputStream();
+            bitmap.compress(Bitmap.CompressFormat.WEBP, quality, bos);
+            byteArrayLength = bos.toByteArray().length;
+            quality -= 10;
+        }
+        try {
+            outs.write(bos.toByteArray());
+            outs.close();
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+        return Uri.fromFile(new File(path));
+    }
+
+    private static void dirChecker(String dir) {
+        File f = new File(dir);
+        if (!f.isDirectory()) {
+            f.mkdirs();
+        }
+        Log.e("StickerPath:-", f + "");
+    }
+
+    /************************************************************************************/
     private void launchInfoActivity(String publisherWebsite, String publisherEmail, String privacyPolicyWebsite, String trayIconUriString) {
         Intent intent = new Intent(StickerPackDetailsActivity.this, StickerPackInfoActivity.class);
         intent.putExtra(StickerPackDetailsActivity.EXTRA_STICKER_PACK_ID, stickerPack.identifier);

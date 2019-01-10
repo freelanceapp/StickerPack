@@ -41,13 +41,13 @@
             </intent-filter>
         </activity>
 
+        <!--android:parentActivityName=".WhatsAppBasedCode.StickerPackListActivity"-->
         <activity
             android:name=".WhatsAppBasedCode.StickerPackDetailsActivity"
-            android:parentActivityName=".WhatsAppBasedCode.StickerPackListActivity"
             tools:ignore="UnusedAttribute">
-            <meta-data
+            <!--<meta-data
                 android:name="android.support.PARENT_ACTIVITY"
-                android:value="com.idoideas.stickermaker.WhatsAppBasedCode.StickerPackListActivity" />
+                android:value="com.idoideas.stickermaker.WhatsAppBasedCode.StickerPackListActivity" />-->
         </activity>
         <activity
             android:name=".WhatsAppBasedCode.StickerPackInfoActivity"
