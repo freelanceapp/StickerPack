@@ -1,4 +1,5 @@
 apply plugin: 'com.android.application'
+//apply plugin: 'com.google.gms.google-services'
 
 android {
     aaptOptions {
@@ -7,11 +8,11 @@ android {
     compileSdkVersion 28
     buildToolsVersion "28.0.3"
     defaultConfig {
-        applicationId "com.idoideas.stickermaker"
+        applicationId "com.ideas.stickermaker"
         minSdkVersion 19
         targetSdkVersion 28
         versionCode 4
-        versionName "1.0.3"
+        versionName "1.0"
         testInstrumentationRunner "android.support.test.runner.AndroidJUnitRunner"
         def contentProviderAuthority = applicationId + ".WhatsAppLicensedCode.CustomStickerContentProvider"
         // Creates a placeholder property to use in the manifest.
@@ -43,6 +44,7 @@ android {
 
 dependencies {
     implementation fileTree(dir: 'libs', include: ['*.jar'])
+    //noinspection GradleCompatible
     implementation 'com.android.support:appcompat-v7:28.0.0'
     /*implementation 'android.arch.navigation:navigation-fragment:1.0.0-alpha07'
     implementation 'android.arch.navigation:navigation-ui:1.0.0-alpha07'*/
@@ -71,4 +73,9 @@ dependencies {
     implementation 'com.wang.avi:library:2.1.3'
     implementation 'com.orhanobut:hawk:2.0.1'
     implementation 'com.android.support:multidex:1.0.3'
+    implementation 'com.google.firebase:firebase-messaging:17.3.4'
+    //implementation 'com.google.firebase:firebase-plugins:1.1.5'
+    //implementation 'com.google.firebase:firebase-perf:16.2.3'
+    implementation 'com.google.firebase:firebase-core:16.0.6'
 }
+apply plugin: 'com.google.gms.google-services'

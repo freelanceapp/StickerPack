@@ -2,7 +2,6 @@
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="@color/colorAccent"
     android:orientation="vertical">
 
     <android.support.v7.widget.Toolbar
@@ -31,7 +30,7 @@
                 android:layout_marginLeft="16dp"
                 android:layout_toRightOf="@+id/imgBack"
                 android:text="About us"
-                android:textColor="@color/colorPrimary"
+                android:textColor="@color/text_color_a"
                 android:textSize="20sp" />
         </RelativeLayout>
     </android.support.v7.widget.Toolbar>
@@ -46,5 +45,5 @@
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:layout_margin="16dp"
-        android:textColor="@color/colorPrimary" />
+        android:textColor="@color/text_color_a" />
 </LinearLayout>

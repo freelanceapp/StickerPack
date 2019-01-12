@@ -1,0 +1,42 @@
+{
+  "project_info": {
+    "project_number": "436840404909",
+    "firebase_url": "https://stickermaker-for-whatsap-904ab.firebaseio.com",
+    "project_id": "stickermaker-for-whatsap-904ab",
+    "storage_bucket": "stickermaker-for-whatsap-904ab.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:436840404909:android:48646a2b0c223fcd",
+        "android_client_info": {
+          "package_name": "com.ideas.stickermaker"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "436840404909-gdpgdavat1ibdc2t0b9d4ou0ufkpq8ge.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyDjE4xTX2pLfMgREUwgSsFfBh0zRxpr0qI"
+        }
+      ],
+      "services": {
+        "analytics_service": {
+          "status": 1
+        },
+        "appinvite_service": {
+          "status": 1,
+          "other_platform_oauth_client": []
+        },
+        "ads_service": {
+          "status": 2
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

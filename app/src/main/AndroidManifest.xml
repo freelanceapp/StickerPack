@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
-    package="com.idoideas.stickermaker">
+    package="com.ideas.stickermaker">
 
     <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE" />
     <uses-permission android:name="android.permission.CHANGE_WIFI_STATE" />
@@ -13,7 +13,7 @@
     <uses-permission android:name="com.android.vending.BILLING" />
 
     <application
-        android:name=".app.Application"
+        android:name="com.ideas.stickermaker.app.Application"
         android:allowBackup="true"
         android:icon="@drawable/stickermakerlogo"
         android:label="@string/app_name"
@@ -23,7 +23,7 @@
         tools:ignore="GoogleAppIndexingWarning"
         tools:node="replace">
         <activity
-            android:name=".WhatsAppBasedCode.StickerPackListActivity"
+            android:name="com.ideas.stickermaker.WhatsAppBasedCode.StickerPackListActivity"
             android:configChanges="keyboardHidden|orientation"
             android:label="@string/title_activity_sticker_packs_list"
             android:theme="@style/AppTheme.NoActionBar">
@@ -43,34 +43,34 @@
 
         <!--android:parentActivityName=".WhatsAppBasedCode.StickerPackListActivity"-->
         <activity
-            android:name=".WhatsAppBasedCode.StickerPackDetailsActivity"
+            android:name="com.ideas.stickermaker.WhatsAppBasedCode.StickerPackDetailsActivity"
             tools:ignore="UnusedAttribute">
             <!--<meta-data
                 android:name="android.support.PARENT_ACTIVITY"
                 android:value="com.idoideas.stickermaker.WhatsAppBasedCode.StickerPackListActivity" />-->
         </activity>
         <activity
-            android:name=".WhatsAppBasedCode.StickerPackInfoActivity"
+            android:name="com.ideas.stickermaker.WhatsAppBasedCode.StickerPackInfoActivity"
             android:label="@string/title_activity_sticker_pack_info"
-            android:parentActivityName=".WhatsAppBasedCode.StickerPackDetailsActivity">
+            android:parentActivityName="com.ideas.stickermaker.WhatsAppBasedCode.StickerPackDetailsActivity">
             <meta-data
                 android:name="android.support.PARENT_ACTIVITY"
-                android:value="com.idoideas.stickermaker.WhatsAppBasedCode.StickerPackDetailsActivity" />
+                android:value="com.ideas.stickermaker.WhatsAppBasedCode.StickerPackDetailsActivity" />
         </activity>
         <activity
-            android:name=".NewUserIntroActivity"
+            android:name="com.ideas.stickermaker.NewUserIntroActivity"
             android:theme="@style/Theme.Intro" />
-        <activity android:name=".ui.activity.AddStickerActivity" />
+        <activity android:name="com.ideas.stickermaker.ui.activity.AddStickerActivity" />
 
         <activity
-            android:name=".ui.activity.ContentActivity"
+            android:name="com.ideas.stickermaker.ui.activity.ContentActivity"
             android:theme="@style/AppTheme.NoActionBar" />
         <activity
-            android:name=".ui.activity.SettingActivity"
+            android:name="com.ideas.stickermaker.ui.activity.SettingActivity"
             android:theme="@style/AppTheme.NoActionBar" />
 
         <activity
-            android:name=".ui.activity.MainActivity"
+            android:name="com.ideas.stickermaker.ui.activity.MainActivity"
             android:theme="@style/AppTheme.NoActionBar">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
@@ -78,27 +78,43 @@
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
-        <activity android:name=".ui.activity.SubCategoryActivity" />
-        <activity android:name=".ui.activity.StickerDetailsActivity">
+        <activity android:name="com.ideas.stickermaker.ui.activity.SubCategoryActivity" />
+        <activity android:name="com.ideas.stickermaker.ui.activity.PackDetailActivity">
             <meta-data
                 android:name="android.support.PARENT_ACTIVITY"
-                android:value=".ui.activity.MainActivity" />
+                android:value="com.ideas.stickermaker.ui.activity.MainActivity" />
         </activity>
+        <activity android:name=".utils.imagepicker.QuendelImagePicker" />
 
-<!--
+        <service
+            android:name=".firebaseUtils.MyFirebaseMessagingService"
+            android:stopWithTask="false">
+            <intent-filter>
+                <action android:name="com.google.firebase.MESSAGING_EVENT" />
+            </intent-filter>
+        </service>
+        <service android:name=".firebaseUtils.MyFirebaseInstanceIDService">
+            <intent-filter>
+                <action android:name="com.google.firebase.INSTANCE_ID_EVENT" />
+            </intent-filter>
+        </service>
+
         <provider
-            android:name=".provider.StickerContentProvider"
+            android:name="com.ideas.stickermaker.WhatsAppBasedCode.CustomStickerContentProvider"
             android:authorities="${contentProviderAuthority}"
             android:enabled="true"
             android:exported="true"
             android:readPermission="com.whatsapp.sticker.READ" />
--->
+
         <provider
-            android:name=".WhatsAppBasedCode.CustomStickerContentProvider"
-            android:authorities="${contentProviderAuthority}"
-            android:enabled="true"
-            android:exported="true"
-            android:readPermission="com.whatsapp.sticker.READ" />
+            android:name="android.support.v4.content.FileProvider"
+            android:authorities="${applicationId}.provider"
+            android:exported="false"
+            android:grantUriPermissions="true">
+            <meta-data
+                android:name="android.support.FILE_PROVIDER_PATHS"
+                android:resource="@xml/provider_paths" />
+        </provider>
     </application>
 
 </manifest>
